@@ -1,0 +1,27 @@
+<html t:type="layout" title="Contact jqtap" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd" xmlns:p="tapestry:parameter" xmlns:j="tapestry-library:jquery">
+	<j:ajaxUpload t:id="uploadFile"  t:multiple="true"  t:sizeLimit="1G">
+		<noscript>
+			<p>JavaScript must be activated!</p>
+		</noscript>
+	</j:ajaxUpload>
+	<t:zone t:id="uploadResult">
+		<div>
+			<t:if test="message">
+				<p>
+					<strong>${message}</strong>
+				</p>
+			</t:if>
+			<!--
+			<t:if test="uploadedFiles">
+				<h4>Uploaded files</h4>
+				<t:grid source="uploadedFiles"  t:row="uploadedFile" t:add="action">
+					<p:actionCell>
+						<a t:type="pagelink" t:page="UploadedFile" 
+						t:context="uploadedFile" href="#">View</a>
+					</p:actionCell>
+				</t:grid>
+			</t:if>
+			-->
+		</div>
+	</t:zone>
+</html>
