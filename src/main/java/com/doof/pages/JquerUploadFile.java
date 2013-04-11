@@ -85,43 +85,43 @@ public class JquerUploadFile {
 		
 	}
 
-//	@OnEvent(component = "uploadFile", value = JQueryEventConstants.AJAX_UPLOAD)
-//	void onUploadFile(UploadedFileItem uploadedFile) throws IOException {
-//
-//		if (uploadedFile != null) {
-//			this.uploadedFiles.add(uploadedFile);
-//		}
-//		
-//
-//		message = "This upload was: AJAX_UPLOAD";
-//
-//		logger.info("Temp directory is set to : " + tempDir);
-//		saveFile(uploadedFile);
-//		ajaxResponseRenderer.addRender("uploadResult", uploadResult);
-//
-//	}
-	
 	@OnEvent(component = "uploadFile", value = JQueryEventConstants.AJAX_UPLOAD)
-	Object onUploadFile(UploadedFileItem uploadedFile) throws IOException {
+	void onUploadFile(UploadedFileItem uploadedFile) throws IOException {
 
 		if (uploadedFile != null) {
 			this.uploadedFiles.add(uploadedFile);
 		}
+		
+
 		message = "This upload was: AJAX_UPLOAD";
 
 		logger.info("Temp directory is set to : " + tempDir);
-//		saveFile(uploadedFile);
-		
-		final JSONObject result = new JSONObject();
-		final JSONObject params = new JSONObject().put(
-				"url",
-				resources.createEventLink("myCustomEvent", "AJAX_UPLOAD")
-						.toURI()).put("zoneId", "uploadResult");
-
-		result.put(AjaxUpload.UPDATE_ZONE_CALLBACK, params);
-		return result;
+		saveFile(uploadedFile);
+		ajaxResponseRenderer.addRender("uploadResult", uploadResult);
+		uploadedFile.cleanup();
 
 	}
+	
+//	@OnEvent(component = "uploadFile", value = JQueryEventConstants.AJAX_UPLOAD)
+//	Object onUploadFile(UploadedFileItem uploadedFile) throws IOException {
+//
+//		if (uploadedFile != null) {
+//			this.uploadedFiles.add(uploadedFile);
+//		}
+//		message = "This upload was: AJAX_UPLOAD";
+//
+//		logger.info("Temp directory is set to : " + tempDir);
+//		
+//		final JSONObject result = new JSONObject();
+//		final JSONObject params = new JSONObject().put(
+//				"url",
+//				resources.createEventLink("myCustomEvent", "AJAX_UPLOAD")
+//						.toURI()).put("zoneId", "uploadResult");
+//
+//		result.put(AjaxUpload.UPDATE_ZONE_CALLBACK, params);
+//		return result;
+//
+//	}
 
 	@OnEvent(component = "uploadFile", value = JQueryEventConstants.NON_XHR_UPLOAD)
 	Object onNonXHRUploadFile(UploadedFileItem uploadedFile) {
@@ -174,6 +174,7 @@ public class JquerUploadFile {
 		File file = new File(uploadedFile.getFileName());
 		uploadedFile.write(file);
 
+		logger.info("Path is : " + file.getPath());
 		document.setPath(file.getPath());
 		logger.info(file.getAbsolutePath());
 		session.persist(document);

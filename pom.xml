@@ -41,7 +41,7 @@
 		<dependency>
 			<groupId>org.got5</groupId>
 			<artifactId>tapestry5-jquery</artifactId>
-			<version>3.3.5</version>
+			<version>3.3.6-SNAPSHOT-hennepin</version>
 		</dependency>
 
 		<!-- This adds automatic compression of JavaScript and CSS when in production 
